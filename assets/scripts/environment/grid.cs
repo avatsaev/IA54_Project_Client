@@ -10,7 +10,10 @@ public class Grid : MonoBehaviour {
 	void Start () {
 
         setLeftTop(new Vector3(-30f, 0f, 30f));
+        print("gridLeftTop : x = " + gridLeftTop.x + "; y = " + gridLeftTop.y + "; z = " + gridLeftTop.z);
         setRightBottom(new Vector3(30f, 0f, -30f));
+        print("gridLeftTop : x = " + gridLeftTop.x + "; y = " + gridLeftTop.y + "; z = " + gridLeftTop.z);
+
     }
 	
 	// Update is called once per frame
