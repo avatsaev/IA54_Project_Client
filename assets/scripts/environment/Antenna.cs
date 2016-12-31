@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class Antenna : MonoBehaviour {
 
     private Vector3 antLeftTop;
     private Vector3 antRightBottom;

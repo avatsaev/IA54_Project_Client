@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class intruders : MonoBehaviour {
+public class Intruders : MonoBehaviour {
    
 
     // Use this for initialization
