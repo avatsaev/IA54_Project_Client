@@ -34,13 +34,12 @@ public class IntruderBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        frameNum++;
-        directionChangeFrame = Random.Range(frameNum - 100, frameNum + 100);
+        directionChangeFrame = Random.Range(- 100, 50);
 
         moveOffsetX = Random.Range(2f, 3f);
         moveOffsetZ = Random.Range(2f, 3f);
 
-        if (directionChangeFrame < frameNum)
+        if (directionChangeFrame < 0)
             changeDirection();
 
 
