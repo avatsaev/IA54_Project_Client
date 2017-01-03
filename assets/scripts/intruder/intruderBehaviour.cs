@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class IntruderBehaviour : MonoBehaviour
 {
 
-    public float moveOffsetX, moveOffsetZ;
+    public float moveOffsetX = 1, moveOffsetZ = 1;
     Vector3 nextPosition;
     private int moveCoordination;
-    private int directionChangeFrame = 0;
+    private int directionChangeCount = 0, directionChangeFrame = 0;
     private int frameNum;
     //script de l'objet grid
     private Grid gridScript;
@@ -20,6 +20,9 @@ public class IntruderBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //initialisation du nombre de frame avant changement de direction
+        directionChangeFrame = Random.Range(50, 100);
+
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
         //recuperation des coins de la grille
@@ -34,21 +37,21 @@ public class IntruderBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //directionChangeFrame = Random.Range(0, 100);
-        if (directionChangeFrame == 0)
+        //on compte le nombre de frame depuis le dernier changement de direction
+        if (directionChangeCount == 0) //on incremente au debut pour prendre en compte un nouveau frame
         {
-            moveOffsetX = Random.Range(-10f, 10f);
-            moveOffsetZ = Random.Range(-10f, 10f);
-            directionChangeFrame += 1;
+            moveOffsetX = Random.Range(-10f, 10f);//choix de la valeur de la composante en x
+            moveOffsetZ = Random.Range(-10f, 10f);//choix de la valeur de la composante en z
+            directionChangeCount += 1;
         }
-        else if (directionChangeFrame < 100)
+        else if (directionChangeCount < directionChangeFrame) //tant qu'on inferieur a la valeur de changement de frame on incremente
         {
-            directionChangeFrame += 1;
+            directionChangeCount += 1;
 
         }
-        else if (directionChangeFrame == 100)
+        else if (directionChangeCount == directionChangeFrame) //quand on atteint la valeur de changement de frame on met met les comptes a 0 afin d'effectuer un changement de direction 
         {
-            directionChangeFrame = 0;
+            directionChangeCount = 0;
 
         }
 
@@ -59,13 +62,11 @@ public class IntruderBehaviour : MonoBehaviour
 
         if (testPosition(transform.position + nextPosition) == true)
         {
-            print("vrai");
 
         }
         else
         {
             transform.position = transform.position += nextPosition;
-            print("faux");
         }
     }
 
