@@ -20,8 +20,8 @@ public class IntruderBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        directionChangeCount = Random.Range(50, 100);
+        //initialisation du nombre de frame avant changement de direction
+        directionChangeFrame = Random.Range(50, 100);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
@@ -37,21 +37,21 @@ public class IntruderBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //directionChangeFrame = Random.Range(0, 100);
-        if (directionChangeFrame == 0)
+        //on compte le nombre de frame depuis le dernier changement de direction
+        if (directionChangeCount == 0) //on incremente au debut pour prendre en compte un nouveau frame
         {
-            moveOffsetX = Random.Range(-10f, 10f);
-            moveOffsetZ = Random.Range(-10f, 10f);
-            directionChangeFrame += 1;
+            moveOffsetX = Random.Range(-10f, 10f);//choix de la valeur de la composante en x
+            moveOffsetZ = Random.Range(-10f, 10f);//choix de la valeur de la composante en z
+            directionChangeCount += 1;
         }
-        else if (directionChangeFrame < directionChangeCount)
+        else if (directionChangeCount < directionChangeFrame) //tant qu'on inferieur a la valeur de changement de frame on incremente
         {
-            directionChangeFrame += 1;
+            directionChangeCount += 1;
 
         }
-        else if (directionChangeFrame == directionChangeCount)
+        else if (directionChangeCount == directionChangeFrame) //quand on atteint la valeur de changement de frame on met met les comptes a 0 afin d'effectuer un changement de direction 
         {
-            directionChangeFrame = 0;
+            directionChangeCount = 0;
 
         }
 
