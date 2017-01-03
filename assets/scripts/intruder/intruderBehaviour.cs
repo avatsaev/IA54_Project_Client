@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class IntruderBehaviour : MonoBehaviour
 {
 
-    public float moveOffsetX, moveOffsetZ;
+    public float moveOffsetX = 1, moveOffsetZ = 1;
     Vector3 nextPosition;
     private int moveCoordination;
-    private int directionChangeFrame;
+    private int directionChangeCount = 0, directionChangeFrame = 0;
     private int frameNum;
     //script de l'objet grid
     private Grid gridScript;
@@ -20,6 +20,9 @@ public class IntruderBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
+        directionChangeCount = Random.Range(50, 100);
+
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
         //recuperation des coins de la grille
@@ -34,20 +37,40 @@ public class IntruderBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        directionChangeFrame = Random.Range(- 100, 50);
+        //directionChangeFrame = Random.Range(0, 100);
+        if (directionChangeFrame == 0)
+        {
+            moveOffsetX = Random.Range(-10f, 10f);
+            moveOffsetZ = Random.Range(-10f, 10f);
+            directionChangeFrame += 1;
+        }
+        else if (directionChangeFrame < directionChangeCount)
+        {
+            directionChangeFrame += 1;
 
-        moveOffsetX = Random.Range(2f, 3f);
-        moveOffsetZ = Random.Range(2f, 3f);
+        }
+        else if (directionChangeFrame == directionChangeCount)
+        {
+            directionChangeFrame = 0;
 
-        if (directionChangeFrame < 0)
-            changeDirection();
+        }
 
+        //if (directionChangeFrame < 5)
+        //    changeDirection();
 
         nextPosition = new Vector3(moveOffsetX, 0, moveOffsetZ) * Time.deltaTime;
-        
-        transform.position += nextPosition;
+
+        if (testPosition(transform.position + nextPosition) == true)
+        {
+
+        }
+        else
+        {
+            transform.position = transform.position += nextPosition;
+        }
     }
 
+    /*  
     public void changeDirection()
     {
         moveCoordination = Random.Range(1, 5);
@@ -78,9 +101,19 @@ public class IntruderBehaviour : MonoBehaviour
 
         }
     }
+    */
 
     public void setPosition(Vector3 posVect)
     {
         nextPosition = posVect;
+    }
+
+    public bool testPosition(Vector3 newPos)
+    {
+        if (newPos.x < gridTL.x || newPos.x > gridRB.x || newPos.z < gridRB.z || newPos.z > gridTL.z)
+            return true;
+        else
+            return false;
+
     }
 }
