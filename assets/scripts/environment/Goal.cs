@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour
     //coins de la grille
     Vector3 gridTL, gridRB;
 
-
+    /*
     void Start()
     {
 
@@ -44,11 +44,13 @@ public class Goal : MonoBehaviour
             z = Random.Range(gridRB.z, gridTL.z);
 
             //verification de l'existence de ces coordonées dans la liste des coordonnées d'intrus
+            
             while (goals.Find(goal => goal.transform.position.x == x) && goals.Find(goal => goal.transform.position.z == z))
             {
                 x = Random.Range(gridTL.x, gridRB.x);
                 z = Random.Range(gridRB.z, gridTL.z);
             }
+            
 
             goalPointPos = new Vector3(x, y, z);
             //affichage des coordonnées choisies
@@ -56,7 +58,9 @@ public class Goal : MonoBehaviour
 
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
             Instantiate(goalPoint, goalPointPos, Quaternion.identity);
-            
+            //goalPoint.transform.position = goalPointPos;
+            //print("goalPoint.x = " + goalPoint.transform.position.x + "; goalPoint.y = " + goalPoint.transform.position.y + "; goalPoint.z = " + goalPoint.transform.position.z);
+
             //ajout du nouveau point d'interet à la liste des points d'interet
             goals.Add(goalPoint);
 
@@ -64,7 +68,16 @@ public class Goal : MonoBehaviour
             //goals.AddRange(GameObject.FindGameObjectsWithTag("goalTag"));
         }
 
+        print("goal list : ");
+        
+        foreach(GameObject goal in goals)
+        {
+            print("(" + goal.transform.position.x + ", " + goal.transform.position.y + ", " + goal.transform.position.z + ")");
+        }
+        
+
     }
+    */
 
     void Update()
     {

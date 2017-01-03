@@ -48,7 +48,7 @@ public class Intruders : MonoBehaviour
 
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
             Instantiate(intruder, intruderPos, Quaternion.identity);
-
+            intruder.transform.position = intruderPos;
             //ajout du nouveau point d'interet à la liste des points d'interet
             intruderList.Add(intruder);
 
