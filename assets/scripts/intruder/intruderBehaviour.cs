@@ -101,7 +101,7 @@ public class IntruderBehaviour : MonoBehaviour
 
     public void findGoal()
     {
-        float ecart = 5f;
+        float ecart = 2f;
         myGoals = goalsScript.getGoalList();
         foundGoal = myGoals.Find(oneGoal => (
         (transform.position.x - ecart <= oneGoal.transform.position.x) &&
