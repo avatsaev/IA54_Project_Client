@@ -60,10 +60,9 @@ public class Goal : MonoBehaviour
             //ajout du nouveau point d'interet à la liste des points d'interet
             goals.Add(goalPoint);
 
-            //pour ajout d'un ensemble d'objet avec un certain tag
-            //goals.AddRange(GameObject.FindGameObjectsWithTag("goalTag"));
         }
-
+        //pour ajout d'un ensemble d'objet avec un certain tag
+        goals.AddRange(GameObject.FindGameObjectsWithTag("goalPoint"));
     }
 
     void Update()

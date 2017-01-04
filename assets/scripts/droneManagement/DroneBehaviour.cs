@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class IntruderBehaviour : MonoBehaviour
+public class DroneBehaviour : MonoBehaviour
 {
 
     public float moveOffsetX = 1, moveOffsetZ = 1;
@@ -55,21 +55,6 @@ public class IntruderBehaviour : MonoBehaviour
 
         }
 
-        //if (directionChangeFrame < 5)
-        //    changeDirection();
-        /*
-        nextPosition = new Vector3(moveOffsetX, 0, moveOffsetZ) * Time.deltaTime;
-
-        if (testPosition(transform.position + nextPosition) == true)
-        {
-
-        }
-        else
-        {
-            transform.position = transform.position += nextPosition;
-        }
-        */
-        //nextPosition = new Vector3(moveOffsetX, 0, moveOffsetZ) * Time.deltaTime;
 
         if (testPosition(transform.position + new Vector3(moveOffsetX, 0, moveOffsetZ) * Time.deltaTime) == true)
         {
@@ -77,42 +62,10 @@ public class IntruderBehaviour : MonoBehaviour
         }
         else
         {
-           moveTo(new Vector3(moveOffsetX, 0, moveOffsetZ));
-        } 
-    }
-
-    /*  
-    public void changeDirection()
-    {
-        moveCoordination = Random.Range(1, 5);
-
-        switch (moveCoordination)
-        {
-
-            case 1:
-                moveOffsetX = -moveOffsetX;
-                moveOffsetZ = -moveOffsetZ;
-                //moveOffsetX = moveOffsetX;
-                //moveOffsetZ = moveOffsetZ;
-                break;
-            case 2:
-                moveOffsetX = -moveOffsetX;
-                //moveOffsetZ = moveOffsetZ;
-                break;
-            case 3:
-                //moveOffsetX = moveOffsetX;
-                moveOffsetZ = -moveOffsetZ;
-                break;
-            case 4:
-                moveOffsetX = -moveOffsetX;
-                moveOffsetZ = -moveOffsetZ;
-                break;
-            default:
-                break;
-
+            moveTo(new Vector3(moveOffsetX, 0, moveOffsetZ));
         }
     }
-    */
+
 
     public void moveTo(Vector3 posVect)
     {

@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Intruders : MonoBehaviour
+public class DroneSet : MonoBehaviour
 {
     //liste des intrus
-    List<GameObject> intruderList;
-    //liste des vecteur position des intrus
-    List<Vector3> intruderPosList;
+    List<GameObject> droneList;
+    //liste des vecteur position des drones
+    List<Vector3> dronePosList;
     //objet intru
-    public GameObject intruder;
+    public GameObject drone;
     //nombre d'intrus
-    private int intruderNumber;
+    private int droneNumber;
     //vecteur de position d'un intru
-    private Vector3 intruderPos;
+    private Vector3 dronePos;
     //coordonnees x, y et z de l'intrus
     private float x, y, z;
     //script de l'objet grid
@@ -21,14 +21,13 @@ public class Intruders : MonoBehaviour
     //coins de la grille
     private Vector3 gridTL, gridRB;
     //script d'un intru
-    private IntruderBehaviour intruderScript;
+    private IntruderBehaviour droneScript;
 
 
     void Start()
     {
-
         //initialisation du nombre de point d'interet
-        setIntruderNumber(5);
+        setDroneNumber(10);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
@@ -40,55 +39,69 @@ public class Intruders : MonoBehaviour
         print("gridRB : x = " + gridRB.x + "; y = " + gridRB.y + "; z = " + gridRB.z);
 
         //instantiaition de la liste
-        intruderList = new List<GameObject>();
-        //instantiaition de la liste vecteur posotion
-        intruderPosList = new List<Vector3>();
+        droneList = new List<GameObject>();
+        //instantiaition de la liste
+        dronePosList = new List<Vector3>();
 
-        for (int i = 1; i <= intruderNumber; i += 1)
+        for (int i = 1; i <= droneNumber; i += 1)
         {
-            
+
             //defintion de la positioon choisie pour l'intru
-            intruderPos = setIntruderPosition(Random.Range(0, 5));
-            print("intruPos " + i + " : x = " + intruderPos.x + "; y = " + intruderPos.y + "; z = " + intruderPos.z);
+            dronePos = setDronePosition(Random.Range(0, 5));
+            print("dronePos " + i + " : x = " + dronePos.x + "; y = " + dronePos.y + "; z = " + dronePos.z);
 
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
-            Instantiate(intruder, intruderPos, Quaternion.identity);
+            Instantiate(drone, dronePos, Quaternion.identity);
         }
 
 
     }
+
 
     void Update()
     {
 
+
     }
 
-    //mise a de la liste des intrus
-    public void updateIntruderList()
+    //definit le nombre de drone
+    public void setDroneNumber(int number)
     {
-        intruderList.Clear();
-        intruderList.AddRange(GameObject.FindGameObjectsWithTag("intruderTag"));
+        droneNumber = number;
+    }
+
+    //pour creer un nouveau drone
+    public void addDrone()
+    {
+        //defintion de la positioon choisie pour l'intru
+        dronePos = setDronePosition(Random.Range(0, 5));
+
+        //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
+        Instantiate(drone, dronePos, Quaternion.identity);
+
+    }
+
+    //met ajout la liste des drones
+    public void updateDroneList()
+    {
+        droneList.Clear();
+        droneList.AddRange(GameObject.FindGameObjectsWithTag("droneTag"));
     }
 
     //mise a jour des vecteurs position
-    public void updateIntruderPosList()
+    public void updateDronePosList()
     {
 
-        intruderPosList.Clear();
-        foreach(GameObject myIntruder in intruderList)
+        dronePosList.Clear();
+        foreach (GameObject myDrone in droneList)
         {
-            intruderPosList.Add(myIntruder.transform.position);
+            dronePosList.Add(myDrone.transform.position);
         }
 
     }
 
-    public void setIntruderNumber(int number)
-    {
-        intruderNumber = number;
-    }
-
-
-    public Vector3 setIntruderPosition(int appearingCase)
+    //choisit une position aleatoire sur une bordure de la grille
+    public Vector3 setDronePosition(int appearingCase)
     {
         do
         {
@@ -98,37 +111,37 @@ public class Intruders : MonoBehaviour
                     //apparition de l'intrus a gauche
                     x = -30f;
                     z = Random.Range(gridRB.z, gridTL.z);
-                    y = Random.Range(1f, 20f);
+                    y = 30f;
                     break;
                 case 2:
                     //appartion de l'intru a droite
                     x = 30f;
                     z = Random.Range(gridRB.z, gridTL.z);
-                    y = Random.Range(1f, 20f);
+                    y = 30f;
                     break;
                 case 3:
                     //apparition de l'intru en bas
                     x = Random.Range(gridTL.x, gridRB.x);
                     z = -30f;
-                    y = Random.Range(1f, 20f);
+                    y = 30f;
                     break;
                 case 4:
                     //apparition de l'intru en haut 
                     x = Random.Range(gridTL.x, gridRB.x);
                     z = 30f;
-                    y = Random.Range(1f, 20f);
+                    y = 30f;
                     break;
                 default:
                     //print("Incorrect case");
                     break;
             }
 
-        } while (intruderList.Find(intruder => intruder.transform.position.x == x) && intruderList.Find(intruder => intruder.transform.position.z == z));
+        } while (droneList.Find(drone => drone.transform.position.x == x) && droneList.Find(drone => drone.transform.position.z == z));
 
-        print("intru : " + "x = " + x + "; y = " + y + "; z = " + z);
+        print("drone : " + "x = " + x + "; y = " + y + "; z = " + z);
 
 
         return new Vector3(x, y, z);
     }
-   
+
 }

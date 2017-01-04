@@ -2,12 +2,16 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 //using moteur;
 
 using SocketIOClient;
 
 public enum CommandeDrone { Haut, Bas, Droite, Gauche, Descendre, Monter, Stabilise, RotationDroite, RotationGauche, Vecteur};
 
+//a voir
+//[System.Serializable]
 public class controller : MonoBehaviour {
 
 	private int vitesse = 0;
@@ -117,10 +121,39 @@ public class controller : MonoBehaviour {
 		Debug.Log("socket error: " + e.Message);
 	}
 
-	// -----------------------------------------------------------------
+    /*
+        ces fonctions ne peuvent etre utiliser que pour des objets
+        serialisable, i.e ayant l'attribut Serializable
+    */
+    //pour envoyer un vecteur a nodeJs
+    public string sendVectorToJson(Vector3 vect)
+    {
+        return JsonUtility.ToJson(vect);
+    }
+
+    //pour envoyer une liste de vecteur a nodeJs
+    public string sendVectListToJson(List<Vector3> myList)
+    {
+        return JsonUtility.ToJson(myList);
+    }
+
+    //pour reecrire les attribut de cette classe a partir d'une chaine Json
+    //savedData = {"vitesseDisplay":3, "hauteurDisplay":0.8}
+    public void Load(string savedData)
+    {
+        JsonUtility.FromJsonOverwrite(savedData, this);
+    }
+
+    //pour retourner un vecteur3 depuis une chaine Json
+    public static Vector3 CreateFromJSON(string jsonStringVect)
+    {
+        return JsonUtility.FromJson<Vector3>(jsonStringVect);
+    }
+
+    // -----------------------------------------------------------------
 
 
-	void FixedUpdate(){
+    void FixedUpdate(){
 		vitesseDisplay.text = "Vitesse actuel " + reguleDrone.getVitesse();
 		hauteurDsiplay.text = "Hauteur voulue " + reguleDrone.getHauteur();
 
