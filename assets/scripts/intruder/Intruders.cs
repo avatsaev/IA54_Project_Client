@@ -28,7 +28,7 @@ public class Intruders : MonoBehaviour
     {
 
         //initialisation du nombre de point d'interet
-        setIntruderNumber(5);
+        setIntruderNumber(15);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
@@ -60,7 +60,8 @@ public class Intruders : MonoBehaviour
 
     void Update()
     {
-
+        updateIntruderList();
+        updateIntruderPosList();
     }
 
     //mise a de la liste des intrus
@@ -129,6 +130,11 @@ public class Intruders : MonoBehaviour
 
 
         return new Vector3(x, y, z);
+    }
+
+    public List<GameObject> getIntruderList()
+    {
+        return intruderList;
     }
    
 }

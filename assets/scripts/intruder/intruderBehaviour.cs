@@ -14,12 +14,28 @@ public class IntruderBehaviour : MonoBehaviour
     private Grid gridScript;
     //coins de la grille
     private Vector3 gridTL, gridRB;
-    //script d'un intru
+    //gameObject camera
+    GameObject myCamera;
+    //script des points d'interet
+    private Goal goalsScript;
+    //point d'interet atteint
+    private GameObject foundGoal;
+    //liste des goals 
+    private List<GameObject> myGoals;
 
 
     // Use this for initialization
     void Start()
     {
+        myGoals = new List<GameObject>();
+
+        //detection de la camera
+        myCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        //recuperation du component script de la grid
+        goalsScript = myCamera.GetComponent<Goal>();
+
+
         //initialisation du nombre de frame avant changement de direction
         directionChangeFrame = Random.Range(50, 100);
 
@@ -78,7 +94,25 @@ public class IntruderBehaviour : MonoBehaviour
         else
         {
            moveTo(new Vector3(moveOffsetX, 0, moveOffsetZ));
-        } 
+        }
+
+        findGoal();
+    }
+
+    public void findGoal()
+    {
+        float ecart = 5f;
+        myGoals = goalsScript.getGoalList();
+        foundGoal = myGoals.Find(oneGoal => (
+        (transform.position.x - ecart <= oneGoal.transform.position.x) &&
+        (oneGoal.transform.position.x <= transform.position.x + ecart) &&
+        (transform.position.z - ecart <= oneGoal.transform.position.z) &&
+        (oneGoal.transform.position.z <= transform.position.z + ecart)
+        ));
+
+        if (foundGoal != null)
+            gridScript.reachGoalPoint(foundGoal);
+
     }
 
     /*  

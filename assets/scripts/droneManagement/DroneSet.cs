@@ -60,7 +60,8 @@ public class DroneSet : MonoBehaviour
 
     void Update()
     {
-
+        updateDroneList();
+        updateDronePosList();
 
     }
 

@@ -20,6 +20,8 @@ public class Goal : MonoBehaviour
     Vector3 gridTL, gridRB;
 
 
+
+
     void Start()
     {
 
@@ -37,6 +39,7 @@ public class Goal : MonoBehaviour
         
         //instanttion de la liste de point d'interet
         goals = new List<GameObject>();
+
         for (int i = 1; i <= goalNumber; i += 1)
         {
             //choix d'une valeur aleatoire pour x et y dans le champ de la plateforme 
@@ -57,12 +60,9 @@ public class Goal : MonoBehaviour
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
             Instantiate(goalPoint, goalPointPos, Quaternion.identity);
             
-            //ajout du nouveau point d'interet à la liste des points d'interet
-            goals.Add(goalPoint);
-
         }
         //pour ajout d'un ensemble d'objet avec un certain tag
-        goals.AddRange(GameObject.FindGameObjectsWithTag("goalPoint"));
+        goals.AddRange(GameObject.FindGameObjectsWithTag("goalTag"));
     }
 
     void Update()
@@ -74,6 +74,11 @@ public class Goal : MonoBehaviour
     {
         goalNumber = number;
     }
-    
+
+    public List<GameObject> getGoalList()
+    {
+        return goals;
+    }
+
 
 }

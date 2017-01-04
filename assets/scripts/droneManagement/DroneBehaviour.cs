@@ -14,12 +14,24 @@ public class DroneBehaviour : MonoBehaviour
     private Grid gridScript;
     //coins de la grille
     private Vector3 gridTL, gridRB;
-    //script d'un intru
 
+    //gameObject camera
+    GameObject myCamera;
+
+    //script Intruder de la camera
+    private Intruders IntrudersScript;
+
+    //liste des intrus
+    private List<GameObject> myIntruders;
+    //intru trouve
+    private GameObject foundIntruder;
 
     // Use this for initialization
     void Start()
     {
+
+        myIntruders = new List<GameObject>();
+
         //initialisation du nombre de frame avant changement de direction
         directionChangeFrame = Random.Range(50, 100);
 
@@ -32,6 +44,9 @@ public class DroneBehaviour : MonoBehaviour
         gridRB = gridScript.getRightBottom();
         print("gridRB : x = " + gridRB.x + "; y = " + gridRB.y + "; z = " + gridRB.z);
 
+        myCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        IntrudersScript = myCamera.GetComponent<Intruders>();
     }
 
     // Update is called once per frame
@@ -55,7 +70,7 @@ public class DroneBehaviour : MonoBehaviour
 
         }
 
-
+        //test si le mouvement est valide et l'effectue, sinon ne bouge pas
         if (testPosition(transform.position + new Vector3(moveOffsetX, 0, moveOffsetZ) * Time.deltaTime) == true)
         {
 
@@ -64,8 +79,27 @@ public class DroneBehaviour : MonoBehaviour
         {
             moveTo(new Vector3(moveOffsetX, 0, moveOffsetZ));
         }
+
+        //recherche un intru dans son voisinage
+        findIntruder();
+
     }
 
+    public void findIntruder()
+    {
+        float ecart = 2f;
+        myIntruders = IntrudersScript.getIntruderList();
+        foundIntruder = myIntruders.Find(intruder => (
+        (transform.position.x - ecart <= intruder.transform.position.x) && 
+        (intruder.transform.position.x <= transform.position.x + ecart) &&
+        (transform.position.z - ecart <= intruder.transform.position.z) &&
+        (intruder.transform.position.z <= transform.position.z + ecart)
+        ));
+
+        if(foundIntruder != null)
+        gridScript.interceptIntruder(foundIntruder);
+
+    }
 
     public void moveTo(Vector3 posVect)
     {
