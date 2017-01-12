@@ -9,8 +9,26 @@ public class Grid : MonoBehaviour {
     Material goalFoundMat;
     Material intruderFoundMat;
 
+    //gameObject camera
+    GameObject myCamera;
+    //script de l'objet droneSet
+    private DroneSet myDrones;
+    //script de l'objet intruders
+    private Intruders myIntruders;
+
+
     // Use this for initialization
     void Start () {
+
+        //detection de la camera
+        myCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        //recuperation du component script DroneSet de la camera
+        myDrones = myCamera.GetComponent<DroneSet>();
+
+        //recuperation du component script DroneSet de la camera
+        myIntruders = myCamera.GetComponent<Intruders>();
+
 
         setLeftTop(new Vector3(-30f, 0f, 30f));
         print("gridLeftTop : x = " + gridLeftTop.x + "; y = " + gridLeftTop.y + "; z = " + gridLeftTop.z);
@@ -24,8 +42,15 @@ public class Grid : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-	
-	}
+
+        if (Input.GetKeyDown("d"))
+            myDrones.addDrone();
+
+        if (Input.GetKeyDown("i"))
+            myIntruders.addIntruder();
+
+
+    }
 
     public void interceptIntruder(GameObject intruderFound)
     {

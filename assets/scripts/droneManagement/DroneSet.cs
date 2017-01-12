@@ -11,7 +11,7 @@ public class DroneSet : MonoBehaviour
     //objet intru
     public GameObject drone;
     //nombre d'intrus
-    private int droneNumber;
+    public int droneNumber;
     //vecteur de position d'un intru
     private Vector3 dronePos;
     //coordonnees x, y et z de l'intrus
@@ -27,7 +27,7 @@ public class DroneSet : MonoBehaviour
     void Start()
     {
         //initialisation du nombre de point d'interet
-        setDroneNumber(10);
+        //setDroneNumber(10);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
@@ -45,13 +45,15 @@ public class DroneSet : MonoBehaviour
 
         for (int i = 1; i <= droneNumber; i += 1)
         {
+            addDrone();
 
             //defintion de la positioon choisie pour l'intru
-            dronePos = setDronePosition(Random.Range(0, 5));
+            /*dronePos = setDronePosition(Random.Range(0, 5));
             print("dronePos " + i + " : x = " + dronePos.x + "; y = " + dronePos.y + "; z = " + dronePos.z);
 
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
             Instantiate(drone, dronePos, Quaternion.identity);
+            */
         }
 
 

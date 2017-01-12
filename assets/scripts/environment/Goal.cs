@@ -9,7 +9,7 @@ public class Goal : MonoBehaviour
     //objet point d'interet
     public GameObject goalPoint;
     //nombre de point d'interet
-    private int goalNumber;
+    public int goalNumber;
     //vecteur de position d'un point d'interet
     private Vector3 goalPointPos;
     //coordonnees x, y et z du point d'interet
@@ -26,7 +26,7 @@ public class Goal : MonoBehaviour
     {
 
         //initialisation du nombre de point d'interet
-        setGoalNumber(8);
+        //setGoalNumber(8);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();

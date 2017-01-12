@@ -11,7 +11,7 @@ public class Intruders : MonoBehaviour
     //objet intru
     public GameObject intruder;
     //nombre d'intrus
-    private int intruderNumber;
+    public int intruderNumber;
     //vecteur de position d'un intru
     private Vector3 intruderPos;
     //coordonnees x, y et z de l'intrus
@@ -28,7 +28,7 @@ public class Intruders : MonoBehaviour
     {
 
         //initialisation du nombre de point d'interet
-        setIntruderNumber(15);
+        //setIntruderNumber(15);
 
         //recuperation du component script de la grid
         gridScript = GameObject.Find("detectionGrid").GetComponent<Grid>();
@@ -46,13 +46,16 @@ public class Intruders : MonoBehaviour
 
         for (int i = 1; i <= intruderNumber; i += 1)
         {
-            
+            addIntruder();
+
+            /* 
             //defintion de la positioon choisie pour l'intru
             intruderPos = setIntruderPosition(Random.Range(0, 5));
             print("intruPos " + i + " : x = " + intruderPos.x + "; y = " + intruderPos.y + "; z = " + intruderPos.z);
 
             //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
             Instantiate(intruder, intruderPos, Quaternion.identity);
+            */
         }
 
 
@@ -63,6 +66,19 @@ public class Intruders : MonoBehaviour
         updateIntruderList();
         updateIntruderPosList();
     }
+
+    //pour creer un nouveau drone
+    public void addIntruder()
+    {
+        //defintion de la positioon choisie pour l'intru
+        intruderPos = setIntruderPosition(Random.Range(0, 5));
+
+        //Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f, 180f), Vector3.up);
+        Instantiate(intruder, intruderPos, Quaternion.identity);
+
+    }
+
+
 
     //mise a de la liste des intrus
     public void updateIntruderList()
